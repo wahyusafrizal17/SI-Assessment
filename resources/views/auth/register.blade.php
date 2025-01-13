@@ -99,7 +99,7 @@
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <button type="submit" class="btn btn-primary w-48" tabindex="4"><i data-feather='log-in'></i> Daftar</button>
-                                        <a href="/login" class="btn btn-warning w-48" tabindex="4"><i data-feather='user-plus'></i> Login</a>
+                                        <a href="/login" class="btn btn-warning w-48" tabindex="4"><i data-feather='arrow-left'></i> Kembali</a>
                                     </div>  
                                 </form>
                             </div>
