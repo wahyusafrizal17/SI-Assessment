@@ -70,6 +70,22 @@
                                     </div>
                                     <div class="mb-1">
                                         <div class="d-flex justify-content-between">
+                                            <label class="form-label" for="tanggal-lahir">Tanggal Lahir</label>
+                                        </div>
+                                        <div class="input-group input-group-merge form-password-toggle">
+                                            <input id="tanggal-lahir" type="date" class="form-control" name="tanggal_lahir" required >
+                                        </div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <div class="d-flex justify-content-between">
+                                            <label class="form-label" for="pekerjaan">Pekerjaan</label>
+                                        </div>
+                                        <div class="input-group input-group-merge form-password-toggle">
+                                            <input id="pekerjaan" type="text" class="form-control" name="pekerjaan" required >
+                                        </div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <div class="d-flex justify-content-between">
                                             <label class="form-label" for="login-password">Password</label>
                                         </div>
                                         <div class="input-group input-group-merge form-password-toggle">

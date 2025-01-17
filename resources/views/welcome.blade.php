@@ -33,7 +33,34 @@
                 @endif
                 {{ Form::open(['url'=>route('assessment.store'),'class'=>'form-horizontal','files'=>true])}}
                  <div class="col-md-12">
+                    @php
+                        $lastBagian = null; // Variabel untuk melacak bagian sebelumnya
+                    @endphp
+
                     @foreach($questions as $question)
+                        @if ($lastBagian !== $question->bagian)
+                            <!-- Tampilkan bagian hanya jika berbeda dengan sebelumnya -->
+                            <div class="alert alert-primary p-2">
+                                <h4 align="center" style="font-weight: bold">BAGIAN {{ $question->bagian }}</h4>
+                                @if($question->bagian == 'I')
+                                    <p class="text-black" style="text-align: justify">Bagian ini terdiri dari <b>19 pernyataan</b> tentang strategi yang Anda gunakan untuk mengatasi stressor baru-baru ini dalam kehidupan Anda.
+                                    <br>Jika Anda tidak yakin untuk memberikan respon pada suatu pernyataan, harap pilih satu yang paling sesuai (biasanya respon pertama yang muncul dalam pikiran Anda).</p>
+                                @elseif($question->bagian == 'II')
+                                    <p class="text-black" style="text-align: justify">
+                                        Bagian ini terdiri dari <b>4 pernyataan</b> tentang kehidupan emosional Anda, khususnya, bagaimana Anda mengendalikan (yaitu, mengatur dan mengelola) emosi Anda.<br>
+                                        Pernyataan-pernyataan di bawah ini melibatkan dua aspek berbeda dari kehidupan emosional Anda. Salah satunya adalah pengalaman emosional Anda, atau apa yang Anda rasakan. Yang lain adalah ekspresi emosional Anda, atau bagaimana Anda menunjukkan emosi Anda dalam cara Anda berbicara, memberi isyarat, atau berperilaku. Beberapa pernyataan mungkin tampak mirip satu sama lain, namun berbeda dalam hal-hal penting.
+                                    </p>
+                                @elseif($question->bagian == 'III')
+                                    <p class="text-black" style="text-align: justify">Bagian ini terdiri dari <b>8 pernyataan</b> tentang respon Anda terhadap perasaan depresi.</p>
+                                @else
+                                    <p class="text-black" style="text-align: justify">Bagian ini terdiri dari <b>9 pernyataan</b> tentang bagaimana Anda bisa merasakan atau memikirkan perasaan Anda.</p>
+                                @endif
+                            </div>
+                            @php
+                                $lastBagian = $question->bagian; // Perbarui bagian terakhir
+                            @endphp
+                        @endif
+
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">

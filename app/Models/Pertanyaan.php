@@ -11,7 +11,7 @@ class Pertanyaan extends Model
 
     protected $table = 'pertanyaan';
 
-    protected $fillable = ['pertanyaan', 'jenis'];
+    protected $fillable = ['pertanyaan', 'jenis', 'bagian'];
 
     public function jawaban(){
         return $this->belongsTo(Jawaban::class, 'id', 'pertanyaan_id')->where('user_id', \Auth::user()->id);

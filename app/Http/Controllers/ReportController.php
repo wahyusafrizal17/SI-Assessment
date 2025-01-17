@@ -6,6 +6,7 @@ use App\Models\Pertanyaan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Exports\JawabanExport;
+use App\Exports\ReportExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
@@ -36,5 +37,10 @@ class ReportController extends Controller
         $user_id =  $request->user_id;
         $user = User::where('id', $user_id)->first();
         return Excel::download(new JawabanExport($user_id), 'Report '.$user->name.'.xlsx');
+    }
+
+    public function export(Request $request) 
+    {
+        return Excel::download(new ReportExport(), 'Report Jawaban.xlsx');
     }
 }
