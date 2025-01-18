@@ -43,6 +43,28 @@
 
     <table width="100%" style="margin-top: 20px">
         <tr>
+            <th colspan="3">HASIL ANALISA DARI SKOR YANG DIDAPATKAN ADALAH SEBAGAI BERIKUT:</th>
+        </tr>
+        <tr>
+            <td colspan="3">Penilaian terhadap REa:</td>
+        </tr>
+        <tr>
+            <td width="20%">Nilai REa</td>
+            <td width="5%">:</td>
+            <td>103, tidak terindikasi mengalami gejaka depresi</td>
+        </tr>
+        <tr>
+            <td colspan="3">Penilaian terhadap REm:</td>
+        </tr>
+        <tr>
+            <td width="20%">Nilai REm</td>
+            <td width="5%">:</td>
+            <td>23, tidak terindikasi mengalami gejaka depresi</td>
+        </tr>
+    </table>
+
+    <table width="100%" style="margin-top: 20px">
+        <tr>
             <th>DESKRIPSI DAN PENJELASAN SETIAP DIMENSI</th>
         </tr>
     </table>
