@@ -1,6 +1,9 @@
 <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">Preview</h5>
-    <a href="{{ route('report.excel', ['user_id' => $user_id]) }}" class="btn btn-primary btn-sm">Export</a>
+    <div class="d-flex gap-1">
+        <a href="{{ route('report.excel', ['user_id' => $user_id]) }}" class="btn btn-primary btn-sm">Export</a>
+        <a href="{{ route('report.cetak', ['user_id' => $user_id]) }}" class="btn btn-primary btn-sm">Cetak</a>
+    </div>
 </div>
 <div class="modal-body">
     <div class="table-responsive">
