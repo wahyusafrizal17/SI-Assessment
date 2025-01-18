@@ -1,4 +1,11 @@
-@extends('layouts.app') @section('content') <div class="app-content content ">
+@extends('layouts.app') 
+@section('content') 
+<style>
+    .swal-text{
+        text-align: center;
+    }
+</style>
+<div class="app-content content ">
     <div class="content-overlay"></div>
     <div class="header-navbar-shadow"></div>
     <div class="content-wrapper container-xxl p-0">
@@ -31,7 +38,7 @@
                     </div>
                 </div>
                 @endif
-                {{ Form::open(['url'=>route('assessment.store'),'class'=>'form-horizontal','files'=>true])}}
+                {{ Form::open(['url'=>route('assessment.store'),'class'=>'form-horizontal','files'=>true, 'id'=>'assessmentForm'])}}
                  <div class="col-md-12">
                     @php
                         $lastBagian = null; // Variabel untuk melacak bagian sebelumnya
@@ -118,4 +125,69 @@
 
         </div>
     </div>
-</div> @endsection
+</div> 
+@endsection
+
+@push('scripts')
+<script>
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const questions = document.querySelectorAll('.card'); // Semua pertanyaan
+        let allAnswered = true;
+
+        questions.forEach(card => {
+            const radios = card.querySelectorAll('input[type="radio"]');
+            const isAnswered = Array.from(radios).some(radio => radio.checked);
+
+            if (!isAnswered) {
+                allAnswered = false;
+                card.style.border = '2px solid red'; // Tandai pertanyaan yang belum diisi
+            } else {
+                card.style.border = 'none'; // Hilangkan tanda jika sudah diisi
+            }
+        });
+
+        if (!allAnswered) {
+            e.preventDefault(); // Hentikan submit
+            alert('Harap isi semua pertanyaan sebelum melanjutkan.');
+        }
+    });
+
+    document.getElementById('assessmentForm').addEventListener('submit', function(event) {
+        const questions = document.querySelectorAll('.card'); // Ambil semua pertanyaan
+        let allAnswered = true;
+
+        questions.forEach(question => {
+            const radios = question.querySelectorAll('input[type="radio"]');
+            const isAnswered = Array.from(radios).some(radio => radio.checked);
+
+            if (!isAnswered) {
+                allAnswered = false;
+                question.style.border = '2px solid #ff9797'; // Tambahkan border merah untuk menandai
+            } else {
+                question.style.border = ''; // Hapus border merah jika sudah terjawab
+            }
+        });
+
+        if (!allAnswered) {
+            event.preventDefault(); // Hentikan pengiriman formulir
+            swal("Pertanyaan Belum Terjawab!", "Harap jawab semua pertanyaan sebelum mengirimkan.", {
+                icon : "warning",
+                buttons: {        			
+                confirm: {
+                    className : 'btn btn-success'
+                }
+                },
+            });
+        }else{
+            swal("Berhasil mengirim jawaban", "Semua jawaban berhasil disimpan.", {
+                icon : "success",
+                buttons: {        			
+                confirm: {
+                    className : 'btn btn-success'
+                }
+                },
+            });
+        }
+    });
+</script>
+@endpush

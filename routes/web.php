@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('forgot-password', [App\Http\Controllers\HomeController::class, 'forgotPassword'])->name('auth.forgot-password');
+// Route::post('forgot-password', [App\Http\Controllers\HomeController::class, 'forgotPassword']);
+
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('assessment.index');
