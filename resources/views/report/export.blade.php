@@ -50,6 +50,13 @@
         <tr>
            <td>{{ $loop->iteration }}</td>
            <td>{{ $row->name}}</td>
+           <?php
+            $pertanyaan = \DB::table('pertanyaan as p')
+                ->join('jawaban as j', 'j.pertanyaan_id', '=', 'p.id')
+                ->where('j.user_id', $row->id)
+                ->select(\DB::raw("CONCAT(p.pertanyaan, ' | ', j.jawaban) AS pertanyaan_jawaban"))
+                ->get()
+           ?>
            @foreach($pertanyaan as $p)
             <td>{{ $p->pertanyaan_jawaban }}</td>
            @endforeach
