@@ -55,7 +55,7 @@
                 ->join('jawaban as j', 'j.pertanyaan_id', '=', 'p.id')
                 ->where('j.user_id', $row->id)
                 ->select(\DB::raw("CONCAT(p.pertanyaan, ' | ', j.jawaban) AS pertanyaan_jawaban"))
-                ->get()
+                ->get();
            ?>
            @foreach($pertanyaan as $p)
             <td>{{ $p->pertanyaan_jawaban }}</td>
