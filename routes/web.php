@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('forgot-password', [App\Http\Controllers\HomeController::class, 'forgotPassword'])->name('auth.forgot-password');
+// Route::post('forgot-password', [App\Http\Controllers\HomeController::class, 'forgotPassword']);
+
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('assessment.index');
@@ -28,6 +32,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('user', 'App\Http\Controllers\UserController');
 
     Route::get('report', [App\Http\Controllers\ReportController::class, 'index'])->name('report.index');
+    Route::get('report/export', [App\Http\Controllers\ReportController::class, 'export'])->name('report.export');
+    Route::get('report/cetak', [App\Http\Controllers\ReportController::class, 'cetak'])->name('report.cetak');
     Route::post('report/detail', [App\Http\Controllers\ReportController::class, 'detail'])->name('report.detail');
     Route::get('report/excel', 'App\Http\Controllers\ReportController@excel')->name('report.excel');
 });

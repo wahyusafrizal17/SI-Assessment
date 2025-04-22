@@ -43,8 +43,8 @@
                         </div>
                         <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
                             <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
-                                <h2 class="card-title fw-bold mb-1">MY ASSESMENT</h2>
-                                <p class="card-text mb-2">Please sign-in to your account and start the adventure</p>
+                                <h2 class="card-title fw-bold mb-1">FORGOT PASSWORD</h2>
+                                <p class="card-text mb-2">Forgot Password</p>
                                 @if (session('success'))
                                     <div class="alert alert-success p-1">
                                         {{ session('success') }}
@@ -54,20 +54,13 @@
                                         {{ session('warning') }}
                                     </div>
                                 @endif
-                                <form method="POST" action="{{ route('login') }}">
+                                <form method="GET" action="{{ route('auth.forgot-password') }}">
                                     @csrf
-                                    <div class="mb-1">
-                                        <label class="form-label" for="login-email">Email</label>
-                                        <input id="login-email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
+                                    @if(!empty($_GET['email']))
+                                    <input type="hidden" name="email" value="{{ $_GET['email'] }}">
                                     <div class="mb-1">
                                         <div class="d-flex justify-content-between">
-                                            <label class="form-label" for="login-password">Password</label><a href="/forgot-password"><small>Forgot Password?</small></a>
+                                            <label class="form-label" for="login-password">Password Baru</label>
                                         </div>
                                         <div class="input-group input-group-merge form-password-toggle">
                                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
@@ -80,14 +73,33 @@
                                         </div>
                                     </div>
                                     <div class="mb-1">
-                                        <div class="form-check">
-                                            <input class="form-check-input" id="remember-me" type="checkbox" tabindex="3" />
-                                            <label class="form-check-label" for="remember-me"> Remember Me</label>
+                                        <div class="d-flex justify-content-between">
+                                            <label class="form-label" for="login-password">Confirm Password</label>
+                                        </div>
+                                        <div class="input-group input-group-merge form-password-toggle">
+                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="confirm_password" required autocomplete="current-password">
+                                            @error('password')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                            <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
                                         </div>
                                     </div>
+                                    @else
+                                    <div class="mb-1">
+                                        <label class="form-label" for="login-email">Email</label>
+                                        <input id="login-email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    @endif
                                     <div class="d-flex justify-content-between">
-                                        <button type="submit" class="btn btn-primary w-48" tabindex="4"><i data-feather='log-in'></i> Login</button>
-                                        <a href="/register" class="btn btn-warning w-48" tabindex="4"><i data-feather='user-plus'></i> Daftar</a>
+                                        <button type="submit" class="btn btn-primary w-48" tabindex="4"><i data-feather='log-in'></i> Submit</button>
+                                        <a href="/login" class="btn btn-warning w-48" tabindex="4"><i data-feather='user-plus'></i> Kembali</a>
                                     </div>                                    
                                 </form>
                             </div>

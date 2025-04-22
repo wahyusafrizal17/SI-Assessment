@@ -16,6 +16,7 @@ class StoreRequest extends FormRequest
         return [
             'pertanyaan'            => 'required',
             'jenis'                 => 'required',
+            'bagian'                => 'required',
         ];
     }
 
@@ -24,6 +25,7 @@ class StoreRequest extends FormRequest
         return [
             'pertanyaan.required'   => 'Pertanyaan tidak boleh kosong',
             'jenis.required'        => 'Jenis tidak boleh kosong',
+            'bagian.required'       => 'Bagian tidak boleh kosong',
         ];
     }
 }

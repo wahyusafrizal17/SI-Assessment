@@ -1,4 +1,11 @@
-@extends('layouts.app') @section('content') <div class="app-content content ">
+@extends('layouts.app') 
+@section('content') 
+<style>
+    .swal-text{
+        text-align: center;
+    }
+</style>
+<div class="app-content content ">
     <div class="content-overlay"></div>
     <div class="header-navbar-shadow"></div>
     <div class="content-wrapper container-xxl p-0">
@@ -31,9 +38,36 @@
                     </div>
                 </div>
                 @endif
-                {{ Form::open(['url'=>route('assessment.store'),'class'=>'form-horizontal','files'=>true])}}
+                {{ Form::open(['url'=>route('assessment.store'),'class'=>'form-horizontal','files'=>true, 'id'=>'assessmentForm'])}}
                  <div class="col-md-12">
+                    @php
+                        $lastBagian = null; // Variabel untuk melacak bagian sebelumnya
+                    @endphp
+
                     @foreach($questions as $question)
+                        @if ($lastBagian !== $question->bagian)
+                            <!-- Tampilkan bagian hanya jika berbeda dengan sebelumnya -->
+                            <div class="alert alert-primary p-2">
+                                <h4 align="center" style="font-weight: bold">BAGIAN {{ $question->bagian }}</h4>
+                                @if($question->bagian == 'I')
+                                    <p class="text-black" style="text-align: justify">Bagian ini terdiri dari <b>19 pernyataan</b> tentang strategi yang Anda gunakan untuk mengatasi stressor baru-baru ini dalam kehidupan Anda.
+                                    <br>Jika Anda tidak yakin untuk memberikan respon pada suatu pernyataan, harap pilih satu yang paling sesuai (biasanya respon pertama yang muncul dalam pikiran Anda).</p>
+                                @elseif($question->bagian == 'II')
+                                    <p class="text-black" style="text-align: justify">
+                                        Bagian ini terdiri dari <b>4 pernyataan</b> tentang kehidupan emosional Anda, khususnya, bagaimana Anda mengendalikan (yaitu, mengatur dan mengelola) emosi Anda.<br>
+                                        Pernyataan-pernyataan di bawah ini melibatkan dua aspek berbeda dari kehidupan emosional Anda. Salah satunya adalah pengalaman emosional Anda, atau apa yang Anda rasakan. Yang lain adalah ekspresi emosional Anda, atau bagaimana Anda menunjukkan emosi Anda dalam cara Anda berbicara, memberi isyarat, atau berperilaku. Beberapa pernyataan mungkin tampak mirip satu sama lain, namun berbeda dalam hal-hal penting.
+                                    </p>
+                                @elseif($question->bagian == 'III')
+                                    <p class="text-black" style="text-align: justify">Bagian ini terdiri dari <b>8 pernyataan</b> tentang respon Anda terhadap perasaan depresi.</p>
+                                @else
+                                    <p class="text-black" style="text-align: justify">Bagian ini terdiri dari <b>9 pernyataan</b> tentang bagaimana Anda bisa merasakan atau memikirkan perasaan Anda.</p>
+                                @endif
+                            </div>
+                            @php
+                                $lastBagian = $question->bagian; // Perbarui bagian terakhir
+                            @endphp
+                        @endif
+
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -91,4 +125,69 @@
 
         </div>
     </div>
-</div> @endsection
+</div> 
+@endsection
+
+@push('scripts')
+<script>
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const questions = document.querySelectorAll('.card'); // Semua pertanyaan
+        let allAnswered = true;
+
+        questions.forEach(card => {
+            const radios = card.querySelectorAll('input[type="radio"]');
+            const isAnswered = Array.from(radios).some(radio => radio.checked);
+
+            if (!isAnswered) {
+                allAnswered = false;
+                card.style.border = '2px solid red'; // Tandai pertanyaan yang belum diisi
+            } else {
+                card.style.border = 'none'; // Hilangkan tanda jika sudah diisi
+            }
+        });
+
+        if (!allAnswered) {
+            e.preventDefault(); // Hentikan submit
+            alert('Harap isi semua pertanyaan sebelum melanjutkan.');
+        }
+    });
+
+    document.getElementById('assessmentForm').addEventListener('submit', function(event) {
+        const questions = document.querySelectorAll('.card'); // Ambil semua pertanyaan
+        let allAnswered = true;
+
+        questions.forEach(question => {
+            const radios = question.querySelectorAll('input[type="radio"]');
+            const isAnswered = Array.from(radios).some(radio => radio.checked);
+
+            if (!isAnswered) {
+                allAnswered = false;
+                question.style.border = '2px solid #ff9797'; // Tambahkan border merah untuk menandai
+            } else {
+                question.style.border = ''; // Hapus border merah jika sudah terjawab
+            }
+        });
+
+        if (!allAnswered) {
+            event.preventDefault(); // Hentikan pengiriman formulir
+            swal("Pertanyaan Belum Terjawab!", "Harap jawab semua pertanyaan sebelum mengirimkan.", {
+                icon : "warning",
+                buttons: {        			
+                confirm: {
+                    className : 'btn btn-success'
+                }
+                },
+            });
+        }else{
+            swal("Berhasil mengirim jawaban", "Semua jawaban berhasil disimpan.", {
+                icon : "success",
+                buttons: {        			
+                confirm: {
+                    className : 'btn btn-success'
+                }
+                },
+            });
+        }
+    });
+</script>
+@endpush

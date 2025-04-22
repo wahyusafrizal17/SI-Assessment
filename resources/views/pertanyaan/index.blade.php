@@ -49,6 +49,7 @@
                                           <th style="width: 5%">No</th>
                                           <th>Pertanyaan</th>
                                           <th>Jenis</th>
+                                          <th>Bagian</th>
                                           <th style="width: 20%" class="text-center">Action</th>
                                        </tr>
                                     </thead>
@@ -58,6 +59,7 @@
                                           <td>{{ $loop->iteration }}</td>
                                           <td>{{ $row->pertanyaan}}</td>
                                           <td>{{ $row->jenis}}</td>
+                                          <td>Bagian {{ $row->bagian}}</td>
                                          <td class="text-center">
                                              <div class="form-button-action">
                                                 <a href="{{ route('pertanyaan.edit',[$row->id]) }}" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-sm" data-original-title="Edit">

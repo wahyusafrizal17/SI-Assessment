@@ -4,25 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Jawaban;
 use App\Models\Pertanyaan;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
         if(\Auth::user()->level == 'super'){
@@ -52,5 +40,25 @@ class HomeController extends Controller
             }
         }
         return redirect()->route('assessment.index')->with('success', 'Jawaban berhasil disimpan.');
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        if(!empty($request->email)){
+            $model = User::where('email', $request->email)->first();
+            if($model){
+                if(!empty($request->password) && !empty($request->confirm_password)){
+                    if($request->password != $request->confirm_password){
+                        return redirect()->back()->with('warning', 'Password tidak sama');
+                    }
+                    $model->password = Hash::make($request->password);
+                    $model->save();
+                    return redirect()->route('login')->with('success', 'Password berhasil diubah.');
+                }
+            }else{
+                return redirect('login')->with('warning', 'Email not found.');
+            }
+        }
+        return view('auth.forgot-password');
     }
 }

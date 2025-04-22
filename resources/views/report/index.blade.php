@@ -30,6 +30,12 @@
                   <div class="row">
                      <div class="col-md-12">
                         <div class="card">
+                           <div class="card-header">
+                              <h4 class="card-title">Report</h4>
+                              <a href="{{ route('report.export') }}" class="btn btn-primary btn-sm">
+                                 <i data-feather='file'></i> Export
+                              </a>
+                          </div>
                            <div class="card-body">
                               <div class="table-responsive">
                                  <table id="basic-datatables" class="display table table-striped table-hover">
