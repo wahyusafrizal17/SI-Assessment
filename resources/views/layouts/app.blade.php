@@ -98,12 +98,24 @@
             <div class="main-menu-content">
                 <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                     @if(Auth::user()->level == 'guest')
-                    <li class="nav-item {!!(Request::is('/')) ? ' active' : '' !!}">
-                        <a class="d-flex align-items-center" href="/">
-                            <i data-feather='check-square'></i>
-                            <span class="menu-title text-truncate" data-i18n="Modal Examples">Question</span>
-                        </a>
-                    </li>
+                    <?php
+                        $cekpeserta = App\Models\PesertaJadwal::where('user_id', \Auth::id())->first();
+                    ?>
+                        @if(!empty($cekpeserta))
+                        <li class="nav-item {!!(Request::is('/')) ? ' active' : '' !!}">
+                            <a class="d-flex align-items-center" href="/">
+                                <i data-feather='check-square'></i>
+                                <span class="menu-title text-truncate" data-i18n="Modal Examples">Question</span>
+                            </a>
+                        </li>
+                        @else
+                        <li class="nav-item {!!(Request::is('list-jadwal')) ? ' active' : '' !!}">
+                            <a class="d-flex align-items-center" href="/">
+                                <i data-feather='calendar'></i>
+                                <span class="menu-title text-truncate" data-i18n="Modal Examples">Jadwal</span>
+                            </a>
+                        </li>
+                        @endif
                     @endif
                     @if(Auth::user()->level == 'super')
                     <li class="nav-item {!! (Request::is('pertanyaan*') || Request::is('user*')) ? 'active open' : '' !!}">
@@ -112,6 +124,12 @@
                             <span class="menu-title text-truncate" data-i18n="User">Master Data</span>
                         </a>
                         <ul class="menu-content {!! (Request::is('pertanyaan*') || Request::is('user*')) ? 'show' : '' !!}">
+                            <li class="{!!(Request::is('jadwal*')) ? ' active' : '' !!}">
+                                <a class="d-flex align-items-center" href="{{ route('jadwal.index') }}">
+                                    <i data-feather="circle"></i>
+                                    <span class="menu-item text-truncate" data-i18n="List">Jadwal</span>
+                                </a>
+                            </li>
                             <li class="{!!(Request::is('pertanyaan*')) ? ' active' : '' !!}">
                                 <a class="d-flex align-items-center" href="{{ route('pertanyaan.index') }}">
                                     <i data-feather="circle"></i>

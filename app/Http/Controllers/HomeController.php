@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Jawaban;
 use App\Models\Pertanyaan;
+use App\Models\PesertaJadwal;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -18,6 +19,10 @@ class HomeController extends Controller
         }
         $data['questions'] = Pertanyaan::with('jawaban')->get();
         $data['cek_jawaban'] = Jawaban::where('user_id', \Auth::user()->id)->count();
+        $cekpeserta = PesertaJadwal::where('user_id', \Auth::id())->first();
+        if(empty($cekpeserta)){
+            return redirect('/list-jadwal');
+        }
         return view('welcome', $data);
     }
 

@@ -31,6 +31,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('user/delete', 'App\Http\Controllers\UserController@delete')->name('user.delete');
     Route::resource('user', 'App\Http\Controllers\UserController');
 
+    Route::post('jadwal/delete', 'App\Http\Controllers\JadwalController@delete')->name('jadwal.delete');
+    Route::resource('jadwal', 'App\Http\Controllers\JadwalController');
+
+    Route::get('list-jadwal', [App\Http\Controllers\JadwalController::class, 'listJadwal'])->name('jadwal.list-jadwal');
+    Route::post('submit-kode', [App\Http\Controllers\JadwalController::class, 'submitKode'])->name('jadwal.submit-kode');
+
     Route::get('report', [App\Http\Controllers\ReportController::class, 'index'])->name('report.index');
     Route::get('report/export', [App\Http\Controllers\ReportController::class, 'export'])->name('report.export');
     Route::get('report/cetak', [App\Http\Controllers\ReportController::class, 'cetak'])->name('report.cetak');
